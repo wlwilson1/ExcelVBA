@@ -1,0 +1,48 @@
+Private Sub HyperLinkFiles()
+ 
+Dim MyDirectory As String
+Dim MyFilename As String
+Dim CurrentRow As Long
+Dim StartingCell As String 'Cell where hyperlinked list starts
+Dim strTemp As String
+
+'Make this a cell address to insert list at fixed cell
+'e.g. StartingCell = "A1"
+Range("A2").Select
+StartingCell = "A2"
+ 
+    'Enter fixed path for folder
+        Application.DefaultFilePath = ""
+ 
+        'If a folder has been selected
+            MyDirectory = ""
+             
+            'Get the first file, look for Normal, Read Only, System and Hidden files
+            MyFilename = Dir(MyDirectory, 7)
+         
+            'While there are files, list them
+            Do While MyFilename <> "" And ActiveCell.Offset(CurrentRow - 1).Value <> ""
+             
+             strTemp = Left(MyFilename, InStrRev(MyFilename, ".") - 1)
+             If strTemp = ActiveCell.Offset(CurrentRow).Value Then
+                ActiveCell.Offset(CurrentRow).Hyperlinks.Add Anchor:=ActiveCell.Offset(CurrentRow), Address:=MyDirectory & MyFilename, TextToDisplay:=strTemp
+                CurrentRow = CurrentRow + 1
+                CurrentRow = 0 'Go back to the selected cell and start with the next file
+                'Get the next file
+                MyFilename = Dir
+             ElseIf ActiveCell.Offset(CurrentRow).Value = "" Then
+                'We reached the end of Column A with no match
+                'Move to the next file
+                MyFilename = Dir
+                CurrentRow = 0
+             Else
+                'We haven't reached the end of Column A yet, so keep searching
+                CurrentRow = CurrentRow + 1
+             End If
+             
+            Loop
+            
+End Sub
+
+
+
