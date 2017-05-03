@@ -1,0 +1,2 @@
+Dim lastrow As Long
+lastrow = Range("A" & Rows.Count).End(xlUp).Row
