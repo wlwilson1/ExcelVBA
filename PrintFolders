@@ -1,0 +1,22 @@
+Sub PrintFolders()
+Dim objFSO As Object
+Dim objFolder As Object
+Dim objSubFolder As Object
+Dim i As Integer
+Dim myFolderPath
+
+myFolderPath = ("")
+'Create an instance of the FileSystemObject
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+'Get the folder object ---------Place correct path inside of parentheses below
+Set objFolder = objFSO.GetFolder(myFolderPath)
+i = 1
+'loops through each folder in the directory and prints their names and path
+For Each objSubFolder In objFolder.subfolders
+    'print folder name
+    Cells(i + 1, 1) = objSubFolder.Name
+    'print folder time
+    Cells(i + 1, 2) = FileDateTime(objSubFolder)
+    i = i + 1
+Next objSubFolder
+End Sub
