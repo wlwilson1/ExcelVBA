@@ -17,6 +17,7 @@ For Each objSubFolder In objFolder.subfolders
     Cells(i + 1, 1) = objSubFolder.Name
     'print folder time
     Cells(i + 1, 2) = FileDateTime(objSubFolder)
+  
     i = i + 1
 Next objSubFolder
 End Sub
