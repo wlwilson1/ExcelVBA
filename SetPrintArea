@@ -1,0 +1,38 @@
+Private Sub SetPrintArea()
+Dim lastrow, lastPBreak, lastVar As Long
+Dim ws As Worksheet
+Dim cel, rng As Range
+Dim i1, i2 As Long
+
+'Set up some variables | lastVar will be the page end variable| i1 is the first row on the page | i2 is also end of the page
+  ''Used 3 variables instead of 2 to make it easier to understand
+lastVar = 31
+i1 = 32
+i2 = 51
+
+
+'Declare sheets
+Set ws = Sheets("Sheet1")
+
+'Find lastrow of column A
+lastrow = ws.Range("A" & Rows.Count).End(xlUp).Row
+
+'If the last row of the sheet is less than row 31, then set the simple print area
+If lastrow <= 31 Then
+    ws.PageSetup.PrintArea = "$A$1:$D$31"
+    
+'else find the correct print area range - should have 20 records per print page
+Else
+    Do Until lastrow >= i1 And lastrow <= i2
+        lastVar = i2 + 20
+        i1 = i1 + 20
+        i2 = i2 + 20
+    Loop
+    ws.PageSetup.PrintArea = "$A$1:$D$" & lastVar
+End If
+
+'Cleanup
+Set ws = Nothing
+
+
+End Sub
